@@ -1,0 +1,25 @@
+const ctrl = {}
+
+const models = require('../models/searchMovie')
+
+ctrl.getData = async (req, res) => {
+    try{
+        const result = await models.queryMovie()
+        return res.status(200).json(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+ctrl.queryMovie = async (req, res) => {
+    try{
+        const title = req.params.title
+        const result = await models.searchMovie({title})
+        return res.status(200).json(result)
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+
+module.exports = ctrl
