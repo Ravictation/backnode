@@ -6,7 +6,4 @@ route.get('/title/:title', ctrl.queryMovie)
 route.get('/', ctrl.getData)
 
 
-
-
-
 module.exports = route

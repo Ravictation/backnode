@@ -13,6 +13,7 @@ ctrlMovie.getData = async (req, res) => {
 
 ctrlMovie.saveData = async (req, res) => {
     try{
+        console.log(req.file)
         const {title, release_date, duration, director, casts, genre_id} = req.body
         const result = await models.addMovie({title, release_date, duration, director, casts, genre_id})
         return res.status(200).json(result)

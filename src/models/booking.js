@@ -20,7 +20,7 @@ model.addBooking = ({ schedule_id, customer_name, email, phone_number, seat_numb
         db.query(`INSERT INTO public.booking (schedule_id, customer_name, email, phone_number, seat_number) VALUES($1, $2, $3, $4, $5)`, 
         [schedule_id, customer_name, email, phone_number, seat_number])
             .then((res) => {
-                resolve(res.rowCount)
+                resolve(`${res.rowCount} data row added`)
             })
             .catch((error) => {
                 console.log("No row was updated, Correct the error and retry")
@@ -36,7 +36,7 @@ model.updateBooking = async ({ schedule_id, customer_name, email, phone_number, 
             [schedule_id, customer_name, email, phone_number, seat_number, booking_id]
             )
         .then((res)=>{
-            resolve(res.rowCount)
+            resolve(`${res.rowCount} data row updated`)
         })
         .catch((error)=>{
             console.log("No row was updated, Correct the error and retry")
@@ -50,7 +50,7 @@ model.deleteBooking = async ({booking_id}) => {
     return new Promise((resolve, reject) => {
         db.query(`DELETE FROM public.booking WHERE booking_id = $1;`, [booking_id])
         .then((res) => {
-            resolve(res.rowCount)
+            resolve(`${res.rowCount} data row deleted`)
         })
         .catch((error) => {
             console.log("No row was updated, Correct the error and retry")

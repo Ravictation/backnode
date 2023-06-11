@@ -19,7 +19,7 @@ model.addMovie = ({ title, release_date, duration, director, casts, genre_id }) 
     return new Promise((resolve, reject) => {
         db.query(`INSERT INTO public.movie (title, release_date, duration, director, casts, genre_id) VALUES($1, $2, $3, $4, $5, $6)`, [title, release_date, duration, director, casts, genre_id])
             .then((res) => {
-                resolve(res.rowCount)
+                resolve(`${res.rowCount} data row added`)
             })
             .catch((error) => {
                 console.log("No row was updated, Correct the error and retry")
@@ -34,7 +34,7 @@ model.updateMovie = async ({movie_id, release_date, genre_id}) => {
             [release_date, genre_id, movie_id]
             )
         .then((res)=>{
-            resolve(res.rowCount)
+            resolve(`${res.rowCount} data row updated`)
         })
         .catch((error)=>{
             console.log("No row was updated, Correct the error and retry")
@@ -48,7 +48,7 @@ model.deleteMovie = async ({movie_id}) => {
     return new Promise((resolve, reject) => {
         db.query(`DELETE FROM public.movie WHERE movie_id = $1;`, [movie_id])
         .then((res) => {
-            resolve(res.rowCount)
+            resolve(`${res.rowCount} data row deleted`)
         })
         .catch((error) => {
             console.log("No row was updated, Correct the error and retry")

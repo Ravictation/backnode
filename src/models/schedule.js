@@ -19,7 +19,7 @@ model.addSchedule = ({ movie_id, start_time, end_time, studio, available_seats }
     return new Promise((resolve, reject) => {
         db.query(`INSERT INTO public.schedule (movie_id, start_time, end_time, studio, available_seats) VALUES($1, $2, $3, $4, $5)`, [movie_id, start_time, end_time, studio, available_seats])
             .then((res) => {
-                resolve(res.rowCount)
+                resolve(`${res.rowCount} data row added`)
             })
             .catch((error) => {
                 console.log("No row was updated, Correct the error and retry")
@@ -34,7 +34,7 @@ model.updateSchedule = async ({ studio, available_seats, schedule_id}) => {
             [studio, available_seats, schedule_id]
             )
         .then((res)=>{
-            resolve(res.rowCount)
+            resolve(`${res.rowCount} data row updated`)
         })
         .catch((error)=>{
             console.log("No row was updated, Correct the error and retry")
@@ -44,18 +44,18 @@ model.updateSchedule = async ({ studio, available_seats, schedule_id}) => {
     })
 }
 
-model.deleteSchedule = async ({schedule_id}) => {
-    return new Promise((resolve, reject) => {
-        db.query(`DELETE FROM public.schedule WHERE schedule_id = $1;`, [schedule_id])
-        .then((res) => {
-            resolve(res.rowCount)
+    model.deleteSchedule = async ({schedule_id}) => {
+        return new Promise((resolve, reject) => {
+            db.query(`DELETE FROM public.schedule WHERE schedule_id = $1;`, [schedule_id])
+            .then((res) => {
+                resolve(`${res.rowCount} data row deleted`)
+            })
+            .catch((error) => {
+                console.log("No row was updated, Correct the error and retry")
+                reject(error)
+            })
         })
-        .catch((error) => {
-            console.log("No row was updated, Correct the error and retry")
-            reject(error)
-        })
-    })
 
-}
+    }
 
 module.exports = model
