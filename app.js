@@ -2,6 +2,7 @@ const express = require ('express')
 const app = express()
 const routers = require('./src/routers/index')
 const db = require('./src/config/db')
+
  
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))

@@ -1,23 +1,36 @@
-const ctrl = {}
-const respon = require('../utils/respon')
+const response = require('../utils/respon')
 const jwt = require('jsonwebtoken')
 
-const check = (req, res, next) => {
-    const { authorization } = req.headers
+const authCheck = (...roles) => {
+    return (req, res, next) => {
+        const { authorization } = req.headers
+        let isValid = false
 
-    if (!authorization) {
-        return respon (res, 401, 'anda perlu login terlebih dahulu')
-    }
+        if (!authorization) {
+            return response(res, 401, 'silahkan login terlebih dahulu')
+        }
 
-    const token = authorization.replace('Bearer ', '')
-    jwt.verify(token,"INI_SECRET_KEY", (err, decode) => {
+        const token = authorization.replace('Bearer ', '')
+        jwt.verify(token, 'INI_SECRET_KEY', (err, decode) => {
             if (err) {
-                return respon (res, 401, err)
+                return response(res, 401, err)
             }
-            console.log(decode)
-            req.user = decode.data
-            return next()
-    } )
+
+            roles.forEach((v) => {
+                if (v == decode.role) {
+                    isValid = true
+                    return
+                }
+            })
+
+            if (isValid) {
+                req.user = decode.data
+                return next()
+            } else {
+                return response(res, 401, 'anda tidak punya akses')
+            }
+        })
+    }
 }
 
-module.exports = check
+module.exports = authCheck

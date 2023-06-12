@@ -13,8 +13,8 @@ ctrlSchedule.getData = async (req, res) => {
 
 ctrlSchedule.saveData = async (req, res) => {
     try{
-        const {movie_id, start_time, end_time, studio, available_seats} = req.body
-        const result = await models.addSchedule({movie_id, start_time, end_time, studio, available_seats})
+        const {movie_id, start_time, end_time, studio, ticket_price} = req.body
+        const result = await models.addSchedule({movie_id, start_time, end_time, studio, ticket_price})
         return res.status(200).json(result)
     } catch (error) {
         console.log(error)

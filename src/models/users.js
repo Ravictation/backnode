@@ -20,7 +20,7 @@ model.getData = () => {
 
 model.getByUser = (username) => {
     return new Promise((resolve, reject) => {
-        db.query('SELECT * FROM public.users WHERE username = $1', [username])
+        db.query('SELECT * FROM public.users WHERE username iLike $1', [username])
             .then((res) => {
                 resolve(res.rows)
             })
@@ -48,26 +48,26 @@ model.saveData = ({ username, password, email }) => {
     })
 }
 
-model.updateData = ({ username, password, email, userId }) => {
+model.updateData = ({ username, password, email, role, userId }) => {
     return new Promise((resolve, reject) => {
-        db.query(
-            `UPDATE public.users SET
-                username = COALESCE(NULLIF($1, ''), username),
-                password = COALESCE(NULLIF($2, ''), password),
-                email = COALESCE(NULLIF($3, ''), email),
-                updated_at = now()
-            WHERE username = $4           
-        `,
-            [username, password, email, userId]
-        )
-            .then((res) => {
-                resolve(`${res.rowCount} user updated`)
-            })
-            .catch((er) => {
-                reject(er)
-            })
-    })
-}
+      db.query(
+        `UPDATE public.users SET
+           username = COALESCE(NULLIF($1, username), username),
+           password = COALESCE(NULLIF($2, password), password),
+           email = COALESCE(NULLIF($3, email), email),
+           role = COALESCE(NULLIF($4, role), role),
+           updated_at = now()
+         WHERE user_id = $5`,
+        [username, password, email, role, userId]
+      )
+        .then((res) => {
+          resolve(`${res.rowCount} user updated`);
+        })
+        .catch((err) => {
+          reject(err);
+        });
+    });
+  };
 
 model.deleteData = (username) => {
     return new Promise((resolve, reject) => {

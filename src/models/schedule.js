@@ -15,9 +15,9 @@ model.getAllSchedule = () => {
     })
 }
 
-model.addSchedule = ({ movie_id, start_time, end_time, studio, available_seats }) => {
+model.addSchedule = ({ movie_id, start_time, end_time, studio, ticket_price }) => {
     return new Promise((resolve, reject) => {
-        db.query(`INSERT INTO public.schedule (movie_id, start_time, end_time, studio, available_seats) VALUES($1, $2, $3, $4, $5)`, [movie_id, start_time, end_time, studio, available_seats])
+        db.query(`INSERT INTO public.schedule (movie_id, start_time, end_time, studio, ticket_price) VALUES($1, $2, $3, $4, $5)`, [movie_id, start_time, end_time, studio, ticket_price])
             .then((res) => {
                 resolve(`${res.rowCount} data row added`)
             })

@@ -11,9 +11,30 @@ ctrlMovie.getData = async (req, res) => {
     }
 }
 
+//query movie
+ctrlMovie.fetchBy = async (req, res) => {
+    try {
+        const params = {
+            page: req.query.page || 1,
+            limit: req.query.limit || 5,
+            orderBy: req.query.orderBy || 'created_at',
+            search: req.query.search
+        }
+        const result = await model.getBy(params)
+        return respone(res, 200, result)
+    } catch (error) {
+        console.log(error)
+        return respone(res, 500, error.message)
+    }
+}
+
 ctrlMovie.saveData = async (req, res) => {
     try{
+        if (req.file !== undefined) {
+            req.body.movie_banner = req.file.path
+        }
         console.log(req.file)
+
         const {title, release_date, duration, director, casts, genre_id} = req.body
         const result = await models.addMovie({title, release_date, duration, director, casts, genre_id})
         return res.status(200).json(result)
