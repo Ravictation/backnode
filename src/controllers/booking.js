@@ -20,6 +20,8 @@ ctrlBooking.getData = async (req, res) => {
         console.log(error)
     }
 }
+
+
 ctrlBooking.saveData = async (req, res) => {
     try{
         const {user_id, schedule_id, seat_number, booking_date} = req.body

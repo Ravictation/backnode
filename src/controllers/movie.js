@@ -1,5 +1,5 @@
 const ctrlMovie = {}
-
+const response = require ('../utils/respon')
 const models = require('../models/movie')
 
 ctrlMovie.getData = async (req, res) => {
@@ -20,11 +20,11 @@ ctrlMovie.fetchBy = async (req, res) => {
             orderBy: req.query.orderBy || 'created_at',
             search: req.query.search
         }
-        const result = await model.getBy(params)
-        return respone(res, 200, result)
+        const result = await models.getBy(params)
+        return response(res, 200, result)
     } catch (error) {
         console.log(error)
-        return respone(res, 500, error.message)
+        return response(res, 500, error.message)
     }
 }
 

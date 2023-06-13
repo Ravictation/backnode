@@ -25,7 +25,7 @@ model.getBy = async ({ page, limit, orderBy, search }) => {
         let count = 0
 
         if (search) {
-            filterQuery += escape('AND movie_name = %L', search)
+            filterQuery += escape('AND title = %L', search)
         }
 
         if (orderBy) {

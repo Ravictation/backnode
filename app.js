@@ -2,6 +2,7 @@ const express = require ('express')
 const app = express()
 const routers = require('./src/routers/index')
 const db = require('./src/config/db')
+require('dotenv').config();
 
  
 app.use(express.json())
@@ -16,6 +17,7 @@ db.connect()
         })
     })
     .catch(() => {
+
         console.log("Error establishing database connection")
     })
 

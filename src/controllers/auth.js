@@ -1,6 +1,6 @@
 const ctrl = {}
 const model = require('../models/users')
-const respone = require('../utils/respon')
+const response = require('../utils/respon')
 const bcrypt = require('bcrypt')
 const jwt = require('../utils/jwt')
 
@@ -9,7 +9,7 @@ ctrl.Login = async (req, res) => {
         const passDb = await model.getByUser(req.body.username)
 
         if (passDb.length <= 0) {
-            return respone(res, 401, 'username tidak terdaftar')
+            return response(res, 401, 'username tidak terdaftar')
         }
 
         const passUser = req.body.password
@@ -17,16 +17,16 @@ ctrl.Login = async (req, res) => {
 
         if (check) {
             const token = await jwt.genToken(req.body.username)
-            return respone(res, 200, {
+            return response(res, 200, {
                 message: 'token created',
                 token
             })
         } else {
-            return respone(res, 401, 'password salah')
+            return response(res, 401, 'password salah')
         }
     } catch (error) {
         console.log(error)
-        return respone(res, 500, error.message)
+        return response(res, 500, error.message)
     }
 }
 
